@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +42,23 @@ public class ItemController {
     @GetMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ItemResponse getItemById(@PathVariable("itemCode") String itemCode) {
         return itemService.getItemById(itemCode);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/{itemCode}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateItem(@RequestBody ItemDTO itemDTO, @PathVariable("itemCode") String itemCode) {
+        if (itemDTO == null || itemCode == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            try {
+                itemService.updateItem(itemCode, itemDTO);
+                logger.info("Item updated : " + itemDTO);
+                return ResponseEntity.noContent().build();
+            } catch (DataPersistFailedException e) {
+                return ResponseEntity.badRequest().build();
+            } catch (Exception e) {
+                return ResponseEntity.internalServerError().build();
+            }
+        }
     }
 }

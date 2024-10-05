@@ -54,7 +54,7 @@ public class CustomerController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable("customerId") String customerId) {
+    public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable("customerId") String customerId) {
         if (customerDTO == null || customerId == null) {
             return ResponseEntity.badRequest().build();
         } else {
