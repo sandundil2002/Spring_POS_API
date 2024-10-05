@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,5 +25,5 @@ public class CustomerEntity implements Serializable {
     private String email;
     @Column(unique = true)
     private int mobile;
-    private LocalDate registerDate;
+    private LocalDateTime registerDateTime;
 }
