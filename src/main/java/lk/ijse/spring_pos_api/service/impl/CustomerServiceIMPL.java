@@ -55,7 +55,13 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public void deleteCustomer(String id) {
-
+        if (customerDAO.existsById(id)) {
+            customerDAO.deleteById(id);
+            System.out.println("Customer deleted : " + id);
+        } else {
+            System.out.println("Customer not found");
+            throw new CustomerNotFoundException("Customer not found");
+        }
     }
 
     @Override

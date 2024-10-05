@@ -53,13 +53,26 @@ public class CustomerController {
         } else {
             try {
                 customerService.updateCustomer(customerId, customerDTO);
-                logger.info("Customer updated : {}", customerDTO);
+                logger.info("Customer updated : " + customerDTO);
                 return ResponseEntity.noContent().build();
             } catch (CustomerNotFoundException e) {
                 return ResponseEntity.notFound().build();
             } catch (Exception e) {
                 return ResponseEntity.internalServerError().build();
             }
+        }
+    }
+
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("customerId") String customerId) {
+        try {
+            customerService.deleteCustomer(customerId);
+            logger.info("Customer deleted : " + customerId);
+            return ResponseEntity.noContent().build();
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 }
