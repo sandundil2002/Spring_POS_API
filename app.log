@@ -5,3 +5,4 @@
 17:22:58:123 [http-nio-8080-exec-3] INFO  l.i.s.controller.HealthController - Customer deleted : C001
 17:24:11:581 [http-nio-8080-exec-5] INFO  l.i.s.controller.HealthController - Customer saved : CustomerDTO(customerId=C003, firstName=Sandun, lastName=Dilshan, name=Sandun Dilshan, address=Galle, email=sandun@gmail.com, mobile=762357995, lastUpdatedAt=2024-10-05T17:24:11.483828)
 22:02:06:056 [http-nio-8080-exec-3] INFO  l.i.s.controller.ItemController - Item updated : ItemDTO(itemCode=null, category=soap, unitPrice=180.0, qtyOnHand=50, registerDate=null, expireDate=2025-10-05)
+22:10:19:269 [http-nio-8080-exec-1] INFO  l.i.s.controller.ItemController - Item deleted : I001
