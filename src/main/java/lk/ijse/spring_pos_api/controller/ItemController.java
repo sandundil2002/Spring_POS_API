@@ -1,16 +1,16 @@
 package lk.ijse.spring_pos_api.controller;
 
+import lk.ijse.spring_pos_api.customObj.ItemResponse;
 import lk.ijse.spring_pos_api.dto.ItemDTO;
 import lk.ijse.spring_pos_api.exception.DataPersistFailedException;
 import lk.ijse.spring_pos_api.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/items")
@@ -19,6 +19,8 @@ public class ItemController {
     @Autowired
     private final ItemService itemService;
 
+    static Logger logger = LoggerFactory.getLogger(ItemController.class);
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveItem(@RequestBody ItemDTO itemDTO) {
         if (itemDTO == null) {
@@ -26,6 +28,7 @@ public class ItemController {
         } else {
             try {
                 itemService.saveItem(itemDTO);
+                logger.info("Item saved : " + itemDTO);
                 return ResponseEntity.created(null).build();
             } catch (DataPersistFailedException e) {
                 return ResponseEntity.badRequest().build();
@@ -33,5 +36,10 @@ public class ItemController {
                 return ResponseEntity.internalServerError().build();
             }
         }
+    }
+
+    @GetMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ItemResponse getItemById(@PathVariable("itemCode") String itemCode) {
+        return itemService.getItemById(itemCode);
     }
 }
