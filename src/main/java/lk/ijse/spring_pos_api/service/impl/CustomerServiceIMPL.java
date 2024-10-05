@@ -1,6 +1,7 @@
 package lk.ijse.spring_pos_api.service.impl;
 
 import lk.ijse.spring_pos_api.customObj.CustomerResponse;
+import lk.ijse.spring_pos_api.customObj.impl.CustomerErrorResponse;
 import lk.ijse.spring_pos_api.dao.CustomerDAO;
 import lk.ijse.spring_pos_api.dto.CustomerDTO;
 import lk.ijse.spring_pos_api.entity.CustomerEntity;
@@ -47,7 +48,17 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public CustomerResponse getCustomerById(String id) {
-        return null;
+        if (customerDAO.existsById(id)) {
+            CustomerEntity customerEntity = customerDAO.getReferenceById(id);
+            System.out.println("Customer found : " + customerEntity);
+            CustomerDTO customerDTO = mappingUtil.convertToCustomerDTO(customerEntity);
+            customerDTO.setFirstName(customerDTO.getName().split(" ")[0]);
+            customerDTO.setLastName(customerDTO.getName().split(" ")[1]);
+            return customerDTO;
+        } else {
+            System.out.println("Customer not found");
+            return new CustomerErrorResponse(0, "Customer not found");
+        }
     }
 
     @Override
