@@ -5,6 +5,7 @@ import lk.ijse.spring_pos_api.customObj.impl.CustomerErrorResponse;
 import lk.ijse.spring_pos_api.dao.CustomerDAO;
 import lk.ijse.spring_pos_api.dto.CustomerDTO;
 import lk.ijse.spring_pos_api.entity.CustomerEntity;
+import lk.ijse.spring_pos_api.exception.CustomerNotFoundException;
 import lk.ijse.spring_pos_api.service.CustomerService;
 import lk.ijse.spring_pos_api.util.AppUtil;
 import lk.ijse.spring_pos_api.util.MappingUtil;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,7 +31,7 @@ public class CustomerServiceIMPL implements CustomerService {
     public String saveCustomer(CustomerDTO customerDTO) {
         customerDTO.setCustomerId(generateCustomerID());
         customerDTO.setName(customerDTO.getFirstName() + " " + customerDTO.getLastName());
-        customerDTO.setRegisterDateTime(AppUtil.getCurrentDateTime());
+        customerDTO.setLastUpdatedAt(AppUtil.getCurrentDateTime());
         CustomerEntity customerEntity = mappingUtil.convertToCustomerEntity(customerDTO);
         customerDAO.save(customerEntity);
         System.out.println("Customer saved : " + customerEntity);
@@ -38,7 +40,17 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public void updateCustomer(String id, CustomerDTO customerDTO) {
-
+        Optional<CustomerEntity> tmpCustomer = customerDAO.findById(id);
+        if (!tmpCustomer.isPresent()) {
+            System.out.println("Customer not found");
+            throw new CustomerNotFoundException("Customer not found");
+        } else {
+            tmpCustomer.get().setName(customerDTO.getFirstName() + " " + customerDTO.getLastName());
+            tmpCustomer.get().setAddress(customerDTO.getAddress());
+            tmpCustomer.get().setMobile(customerDTO.getMobile());
+            tmpCustomer.get().setLastUpdatedAt(AppUtil.getCurrentDateTime());
+            System.out.println("Customer updated : " + customerDTO);
+        }
     }
 
     @Override

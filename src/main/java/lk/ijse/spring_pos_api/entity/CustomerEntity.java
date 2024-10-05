@@ -25,5 +25,5 @@ public class CustomerEntity implements Serializable {
     private String email;
     @Column(unique = true)
     private int mobile;
-    private LocalDateTime registerDateTime;
+    private LocalDateTime lastUpdatedAt;
 }
