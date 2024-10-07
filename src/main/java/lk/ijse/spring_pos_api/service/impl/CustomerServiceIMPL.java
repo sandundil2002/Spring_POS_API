@@ -7,7 +7,7 @@ import lk.ijse.spring_pos_api.dto.CustomerDTO;
 import lk.ijse.spring_pos_api.entity.CustomerEntity;
 import lk.ijse.spring_pos_api.exception.CustomerNotFoundException;
 import lk.ijse.spring_pos_api.service.CustomerService;
-import lk.ijse.spring_pos_api.util.AppUtil;
+import lk.ijse.spring_pos_api.util.DateTimeUtil;
 import lk.ijse.spring_pos_api.util.MappingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class CustomerServiceIMPL implements CustomerService {
     public String saveCustomer(CustomerDTO customerDTO) {
         customerDTO.setCustomerId(generateCustomerID());
         customerDTO.setName(customerDTO.getFirstName() + " " + customerDTO.getLastName());
-        customerDTO.setLastUpdatedAt(AppUtil.getCurrentDateTime());
+        customerDTO.setLastUpdatedAt(DateTimeUtil.getCurrentDateTime());
         CustomerEntity customerEntity = mappingUtil.convertToCustomerEntity(customerDTO);
         customerDAO.save(customerEntity);
         System.out.println("Customer saved : " + customerEntity);
@@ -48,7 +48,7 @@ public class CustomerServiceIMPL implements CustomerService {
             tmpCustomer.get().setName(customerDTO.getFirstName() + " " + customerDTO.getLastName());
             tmpCustomer.get().setAddress(customerDTO.getAddress());
             tmpCustomer.get().setMobile(customerDTO.getMobile());
-            tmpCustomer.get().setLastUpdatedAt(AppUtil.getCurrentDateTime());
+            tmpCustomer.get().setLastUpdatedAt(DateTimeUtil.getCurrentDateTime());
             System.out.println("Customer updated : " + customerDTO);
         }
     }

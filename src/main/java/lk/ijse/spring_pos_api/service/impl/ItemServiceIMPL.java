@@ -6,7 +6,7 @@ import lk.ijse.spring_pos_api.dto.ItemDTO;
 import lk.ijse.spring_pos_api.entity.ItemEntity;
 import lk.ijse.spring_pos_api.exception.ItemNotFoundException;
 import lk.ijse.spring_pos_api.service.ItemService;
-import lk.ijse.spring_pos_api.util.AppUtil;
+import lk.ijse.spring_pos_api.util.DateTimeUtil;
 import lk.ijse.spring_pos_api.util.MappingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ItemServiceIMPL implements ItemService {
     @Override
     public String saveItem(ItemDTO itemDTO) {
         itemDTO.setItemCode(generateItemID());
-        itemDTO.setRegisterDate(AppUtil.getCurrentDate());
+        itemDTO.setRegisterDate(DateTimeUtil.getCurrentDate());
         ItemEntity itemEntity = mappingUtil.convertToItemEntity(itemDTO);
         itemDAO.save(itemEntity);
         System.out.println("Item saved : " + itemEntity);

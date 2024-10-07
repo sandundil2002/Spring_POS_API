@@ -7,8 +7,10 @@ import lk.ijse.spring_pos_api.dto.OrderDetailDTO;
 import lk.ijse.spring_pos_api.entity.ItemEntity;
 import lk.ijse.spring_pos_api.entity.OrderDetailEntity;
 import lk.ijse.spring_pos_api.entity.OrderEntity;
+import lk.ijse.spring_pos_api.exception.DataPersistFailedException;
+import lk.ijse.spring_pos_api.exception.ItemNotFoundException;
 import lk.ijse.spring_pos_api.service.OrderService;
-import lk.ijse.spring_pos_api.util.AppUtil;
+import lk.ijse.spring_pos_api.util.DateTimeUtil;
 import lk.ijse.spring_pos_api.util.MappingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,48 +35,44 @@ public class OrderServiceIMPL implements OrderService {
 
     @Override
     public String saveOrder(OrderDTO orderDTO) {
-        orderDTO.getOrderDetails().forEach(orderDetailDTO -> {
-            if (!updateItemQty(orderDetailDTO)) {
-                throw new RuntimeException("Failed to update stock for item: " + orderDetailDTO.getItemCode());
-            }
-        });
-
         orderDTO.setOrderId(generateOrderID());
-        orderDTO.setOrderDateTime(AppUtil.getCurrentDateTime());
-        orderDTO.setTotal(orderDTO.getOrderDetails().stream().mapToDouble(orderDetailDTO -> orderDetailDTO.getQty() * orderDetailDTO.getUnitPrice()).sum());
+        orderDTO.setOrderDateTime(DateTimeUtil.getCurrentDateTime());
+        orderDTO.setTotal(orderDTO.getOrderDetails().stream().mapToDouble(detail -> detail.getQty() * detail.getUnitPrice()).sum());
         OrderEntity orderEntity = mappingUtil.convertToOrderEntity(orderDTO);
 
         List<OrderDetailEntity> orderDetailEntities = orderDTO.getOrderDetails().stream().map(detail -> {
                     OrderDetailEntity orderDetailEntity = mappingUtil.convertToOrderDetailEntity(detail);
+                    orderDetailEntity.setDescription("Payment Verified");
                     orderDetailEntity.setOrder(orderEntity);
                     return orderDetailEntity;
                 })
                 .collect(Collectors.toList());
 
         orderEntity.setOrderDetails(orderDetailEntities);
+        boolean allItemsUpdated = orderDTO.getOrderDetails().stream().allMatch(this::updateItemQty);
 
-        orderDAO.save(orderEntity);
-        return "Place order successfully";
+        if (allItemsUpdated) {
+            orderDAO.save(orderEntity);
+            return "Order placed successfully";
+        } else {
+            throw new DataPersistFailedException("place order failed");
+        }
     }
 
     private boolean updateItemQty(OrderDetailDTO orderDetailDTO) {
         ItemEntity item = itemDAO.findById(orderDetailDTO.getItemCode()).orElse(null);
-
         if (item == null) {
-            System.out.println("Item not found: " + orderDetailDTO.getItemCode());
-            return false;
+            throw new ItemNotFoundException("Item not found");
         }
 
         if (item.getQtyOnHand() < orderDetailDTO.getQty()) {
-            System.out.println("Not enough stock for item: " + orderDetailDTO.getItemCode());
-            return false;
+            throw new ItemNotFoundException("Item qty not enough");
         }
 
         item.setQtyOnHand(item.getQtyOnHand() - orderDetailDTO.getQty());
         itemDAO.save(item);
         return true;
     }
-
 
     private String generateOrderID() {
         if (orderDAO.count() == 0) {
@@ -91,5 +89,4 @@ public class OrderServiceIMPL implements OrderService {
             }
         }
     }
-
 }
