@@ -24,3 +24,4 @@
 23:49:45:529 [http-nio-8080-exec-5] INFO  l.i.s.controller.ItemController - Item saved : ItemDTO(itemCode=I006, category=Soap, unitPrice=100.0, qtyOnHand=1, registerDate=2024-10-09, expireDate=2025-10-05)
 23:50:06:352 [http-nio-8080-exec-7] INFO  l.i.s.controller.ItemController - Item deleted : I006
 23:50:10:921 [http-nio-8080-exec-8] INFO  l.i.s.controller.ItemController - Item deleted : I005
+23:55:49:123 [http-nio-8080-exec-2] INFO  l.i.s.controller.OrderController - Order saved : OrderDTO(orderId=O007, customerId=C002, orderDetails=[OrderDetailDTO(orderId=null, itemCode=I002, qty=2, unitPrice=200.0, total=0.0), OrderDetailDTO(orderId=null, itemCode=I003, qty=7, unitPrice=50.0, total=0.0)], orderDateTime=2024-10-09T23:55:48.036784900, total=750.0, paymentMethod=card)

@@ -1,5 +1,6 @@
 package lk.ijse.spring_pos_api.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.spring_pos_api.dto.OrderDTO;
 import lk.ijse.spring_pos_api.exception.DataPersistFailedException;
 import lk.ijse.spring_pos_api.service.OrderService;
@@ -21,7 +22,7 @@ public class OrderController {
     static Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveOrder(@RequestBody OrderDTO order) {
+    public ResponseEntity<Void> saveOrder(@Valid @RequestBody OrderDTO order) {
         if (order == null) {
             return ResponseEntity.badRequest().build();
         } else {
