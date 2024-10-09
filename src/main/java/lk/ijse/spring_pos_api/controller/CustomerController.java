@@ -1,5 +1,6 @@
 package lk.ijse.spring_pos_api.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.spring_pos_api.customObj.CustomerResponse;
 import lk.ijse.spring_pos_api.dto.CustomerDTO;
 import lk.ijse.spring_pos_api.exception.CustomerNotFoundException;
@@ -26,7 +27,7 @@ public class CustomerController {
     static Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveCustomer(@RequestBody CustomerDTO customer) {
+    public ResponseEntity<Void> saveCustomer(@Valid @RequestBody CustomerDTO customer) {
         if (customer == null) {
             return ResponseEntity.badRequest().build();
         } else {
@@ -37,6 +38,7 @@ public class CustomerController {
             } catch (DataPersistFailedException e) {
                 return ResponseEntity.badRequest().build();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -54,7 +56,7 @@ public class CustomerController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable("customerId") String customerId) {
+    public ResponseEntity<Void> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO, @PathVariable("customerId") String customerId) {
         if (customerDTO == null || customerId == null) {
             return ResponseEntity.badRequest().build();
         } else {
@@ -65,6 +67,7 @@ public class CustomerController {
             } catch (CustomerNotFoundException e) {
                 return ResponseEntity.notFound().build();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -79,6 +82,7 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
