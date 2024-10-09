@@ -19,3 +19,8 @@
 23:21:48:258 [http-nio-8080-exec-6] INFO  l.i.s.controller.CustomerController - Customer saved : CustomerDTO(customerId=C004, firstName=S, lastName=D, name=S D, address=Galle, email=san@gmail.com, mobile=762357996, lastUpdatedAt=2024-10-09T23:21:48.131305700)
 23:22:21:533 [http-nio-8080-exec-9] INFO  l.i.s.controller.CustomerController - Customer deleted : C004
 23:33:16:325 [http-nio-8080-exec-10] INFO  l.i.s.controller.CustomerController - Customer saved : CustomerDTO(customerId=C004, firstName=udara, lastName=san, name=udara san, address=Galle, email=san@gmail.com, mobile=762357996, lastUpdatedAt=2024-10-09T23:33:15.524904300)
+23:46:23:300 [http-nio-8080-exec-11] INFO  l.i.s.controller.ItemController - Item saved : ItemDTO(itemCode=I004, category=Soap, unitPrice=100.0, qtyOnHand=20, registerDate=2024-10-09, expireDate=2025-10-05)
+23:47:10:744 [http-nio-8080-exec-15] INFO  l.i.s.controller.ItemController - Item saved : ItemDTO(itemCode=I005, category=Soap, unitPrice=100.0, qtyOnHand=0, registerDate=2024-10-09, expireDate=2025-10-05)
+23:49:45:529 [http-nio-8080-exec-5] INFO  l.i.s.controller.ItemController - Item saved : ItemDTO(itemCode=I006, category=Soap, unitPrice=100.0, qtyOnHand=1, registerDate=2024-10-09, expireDate=2025-10-05)
+23:50:06:352 [http-nio-8080-exec-7] INFO  l.i.s.controller.ItemController - Item deleted : I006
+23:50:10:921 [http-nio-8080-exec-8] INFO  l.i.s.controller.ItemController - Item deleted : I005
