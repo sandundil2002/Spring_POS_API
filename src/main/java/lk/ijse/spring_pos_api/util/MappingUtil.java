@@ -46,28 +46,12 @@ public class MappingUtil {
     }
 
     //mapping by order entity & dto
-    public OrderDTO convertToOrderDTO(OrderEntity entity){
-        return modelMapper.map(entity, OrderDTO.class);
-    }
-
     public OrderEntity convertToOrderEntity(OrderDTO dto){
         return modelMapper.map(dto, OrderEntity.class);
     }
 
-    public List<OrderDTO> convertToOrderDTOList(List<OrderEntity> entities){
-        return modelMapper.map(entities, List.class);
-    }
-
     //mapping by order details entity & dto
-    public OrderDetailDTO convertToOrderDetailDTO(OrderDetailEntity entity){
-        return modelMapper.map(entity, OrderDetailDTO.class);
-    }
-
     public OrderDetailEntity convertToOrderDetailEntity(OrderDetailDTO dto){
         return modelMapper.map(dto, OrderDetailEntity.class);
-    }
-
-    public List<OrderDetailDTO> convertToOrderDetailDTOList(List<OrderDetailEntity> entities){
-        return modelMapper.map(entities, List.class);
     }
 }
