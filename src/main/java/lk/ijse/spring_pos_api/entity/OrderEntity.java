@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public class OrderEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private CustomerEntity customer;
-    private LocalDateTime orderDateTime;
+    private String orderDateTime;
     private double total;
     private String paymentMethod;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

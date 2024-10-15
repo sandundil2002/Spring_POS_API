@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class DateTimeUtil {
-    public static LocalDateTime getCurrentDateTime() {
-        return LocalDateTime.now();
+    public static String getCurrentDateTime() {
+        return LocalDateTime.now().toString();
     }
 
-    public static LocalDate getCurrentDate() {
-        return LocalDate.now();
+    public static String getCurrentDate() {
+        return LocalDate.now().toString();
     }
 }

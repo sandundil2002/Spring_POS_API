@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,7 +22,7 @@ public class OrderDTO implements Serializable, OrderResponse {
     @NotEmpty(message = "Order must contain at least one order detail")
     @Valid
     private List<OrderDetailDTO> orderDetails;
-    private LocalDateTime orderDateTime;
+    private String orderDateTime;
     private double total;
     @NotBlank(message = "Payment method cannot be blank")
     @Pattern(regexp = "cash|card|mobile", message = "Payment method must be either 'cash' or 'card'")

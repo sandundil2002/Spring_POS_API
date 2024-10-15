@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OrderController {
     @Autowired
     private final OrderService orderService;
@@ -23,6 +24,7 @@ public class OrderController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveOrder(@Valid @RequestBody OrderDTO order) {
+        System.out.println(order);
         if (order == null) {
             return ResponseEntity.badRequest().build();
         } else {

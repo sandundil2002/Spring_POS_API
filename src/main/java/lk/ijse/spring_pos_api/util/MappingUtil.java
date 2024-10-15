@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -28,9 +29,22 @@ public class MappingUtil {
         return modelMapper.map(dto, CustomerEntity.class);
     }
 
-    public List<CustomerDTO> convertToCustomerDTOList(List<CustomerEntity> entities){
-        return modelMapper.map(entities, List.class);
+    public List<CustomerDTO> convertToCustomerDTOList(List<CustomerEntity> customerEntities) {
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+
+        for (CustomerEntity entity : customerEntities) {
+            CustomerDTO dto = new CustomerDTO();
+            dto.setCustomerId(entity.getCustomerId());
+            dto.setName(entity.getName());
+            dto.setAddress(entity.getAddress());
+            dto.setEmail(entity.getEmail());
+            dto.setMobile(entity.getMobile());
+            dto.setLastUpdatedAt(entity.getLastUpdatedAt());
+            customerDTOs.add(dto);
+        }
+        return customerDTOs;
     }
+
 
     //mapping by item entity & dto
     public ItemDTO convertToItemDTO(ItemEntity entity){
@@ -42,7 +56,19 @@ public class MappingUtil {
     }
 
     public List<ItemDTO> convertToItemDTOList(List<ItemEntity> entities){
-        return modelMapper.map(entities, List.class);
+        List<ItemDTO> itemDTOS = new ArrayList<>();
+
+        for (ItemEntity entity : entities) {
+            ItemDTO dto = new ItemDTO();
+            dto.setItemCode(entity.getItemCode());
+            dto.setCategory(entity.getCategory());
+            dto.setUnitPrice(entity.getUnitPrice());
+            dto.setQtyOnHand(entity.getQtyOnHand());
+            dto.setRegisterDate(entity.getRegisterDate());
+            dto.setExpireDate(entity.getExpireDate());
+            itemDTOS.add(dto);
+        }
+        return itemDTOS;
     }
 
     //mapping by order entity & dto

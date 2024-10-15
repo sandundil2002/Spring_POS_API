@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,5 +30,5 @@ public class CustomerDTO implements Serializable, CustomerResponse {
     @Email(message = "Invalid email format")
     private String email;
     private int mobile;
-    private LocalDateTime lastUpdatedAt;
+    private String lastUpdatedAt;
 }

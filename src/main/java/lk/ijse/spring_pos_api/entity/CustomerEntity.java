@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,7 +22,7 @@ public class CustomerEntity implements Serializable {
     private String email;
     @Column(unique = true)
     private int mobile;
-    private LocalDateTime lastUpdatedAt;
+    private String lastUpdatedAt;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<OrderEntity> orders;
 }

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,8 +20,7 @@ public class ItemDTO implements Serializable, ItemResponse {
     private double unitPrice;
     @Min(value = 1, message = "Quantity on hand cannot be negative")
     private int qtyOnHand;
-    private LocalDate registerDate;
-    @Future(message = "Expire date must be in the future")
+    private String registerDate;
     @NotNull(message = "Expire date cannot be null")
-    private LocalDate expireDate;
+    private String expireDate;
 }
