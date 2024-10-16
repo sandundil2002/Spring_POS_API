@@ -69,6 +69,10 @@ Technologies used in the project:
 
 * You can view the detailed API documentation with example requests and responses <a href="https://documenter.getpostman.com/view/35384990/2sAXxQfCXa">here</a>.
 
+<h2>Frontend Repository</h2>
+
+* For the frontend implementation of this project, you can visit the repository <a href="https://github.com/sandundil2002/Spring_POS_Frontend.git">Spring POS Frontend</a>
+
 <h2>🛡️ License:</h2>
 
 This project is licensed under the MIT License - see the LICENSE file for details.
